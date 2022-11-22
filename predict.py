@@ -103,6 +103,7 @@ def predict(image_path, model, topk,gpu):
     np_image = np_image.float()
     print(model)
     print(gpu)
+    gpu= torch.device("cuda" if gpu == 'cuda' and torch.cuda.is_available() else "cpu")
     model = model.to(gpu)
     np_image = np_image.to(gpu)
     prediction = model.forward(np_image)
@@ -118,6 +119,7 @@ def load_names(njson):
 def main(): 
     args = parse()
     gpu = args.gpu
+    print(args.checkpoint)
     model = loadsavedmodel(args.checkpoint)
     names = load_names(args.category_names)
     
